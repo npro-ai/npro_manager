@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 
-#include <sca.hpp>
+#include <sca_impl.hpp>
 
 #include <dbsync.hpp>
 
-#include "mocks/mockdbsync.hpp"
+#include <mock_dbsync.hpp>
 
 #include <memory>
 #include <string>

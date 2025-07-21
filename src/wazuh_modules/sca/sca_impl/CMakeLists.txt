@@ -32,6 +32,7 @@ include_directories(${SRC_FOLDER}/external/nlohmann/)
 include_directories(${SRC_FOLDER}/external/libyaml/include)
 include_directories(${SRC_FOLDER}/external/openssl/include/) # needed for hash_helper
 include_directories(${SRC_FOLDER}/headers/)
+include_directories(${SRC_FOLDER}/wazuh_modules/)
 include_directories(${SRC_FOLDER}/shared_modules/common/)
 include_directories(${SRC_FOLDER}/shared_modules/file_helper/filesystem/include/)
 include_directories(${SRC_FOLDER}/shared_modules/file_helper/file_io/include/)
@@ -96,6 +97,7 @@ add_library(
     src/sca_utils.cpp
     src/check_condition_evaluator.cpp
     $<$<PLATFORM_ID:Windows>:src/sca_policy_check_win.cpp>
+    $<$<BOOL:${UNIT_TEST}>:tests/wm_exec_stub.cpp>
     ${SRC_FOLDER}/${RESOURCE_OBJ})
 
 target_include_directories(SCAImpl PUBLIC include PRIVATE src)
@@ -115,7 +117,7 @@ target_link_libraries(
             ${OPENSSL_LIB}
 )
 
-if(BUILD_TESTS)
+if(UNIT_TEST)
     enable_testing()
     add_subdirectory(tests)
 endif()
