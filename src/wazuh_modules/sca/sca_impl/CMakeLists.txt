@@ -102,6 +102,9 @@ add_library(
 
 target_include_directories(SCAImpl PUBLIC include PRIVATE src)
 
+# Set position independent code for static library that will be linked into shared library
+set_target_properties(SCAImpl PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
 target_compile_definitions(SCAImpl PRIVATE PCRE2_CODE_UNIT_WIDTH=8)
 
 target_link_libraries(

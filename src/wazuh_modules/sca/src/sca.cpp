@@ -1,5 +1,5 @@
 #include <sca.hpp>
-#include <sca_impl.hpp>
+
 #include <iostream>
 
 #ifdef __cplusplus
@@ -63,11 +63,13 @@ SCA::SCA()
 void SCA::init(const std::function<void(const modules_log_level_t, const std::string&)> logFunction)
 {
     // TODO Start doing whatever the module does
+    m_sca = std::make_unique<SecurityConfigurationAssessment>(".", "agent-uuid-placeholder");
 }
 
 void SCA::destroy()
 {
     // TODO Stop doing whatever the module is doing and clean up
+    m_sca.reset();
 }
 
 void SCA::push(const std::string& data)
