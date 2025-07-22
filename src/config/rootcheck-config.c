@@ -34,8 +34,6 @@ int Read_Rootcheck(XML_NODE node, void *configp, __attribute__((unused)) void *m
     rkconfig *rootcheck;
 
     /* XML Definitions */
-    const char *xml_rootkit_files = "rootkit_files";
-    const char *xml_rootkit_trojans = "rootkit_trojans";
     const char *xml_winaudit = "windows_audit";
     const char *xml_unixaudit = "system_audit";
     const char *xml_winapps = "windows_apps";
@@ -49,12 +47,10 @@ int Read_Rootcheck(XML_NODE node, void *configp, __attribute__((unused)) void *m
     const char *xml_ignore = "ignore";
 
     const char *xml_check_dev = "check_dev";
-    const char *xml_check_files = "check_files";
     const char *xml_check_if = "check_if";
     const char *xml_check_pids = "check_pids";
     const char *xml_check_ports = "check_ports";
     const char *xml_check_sys = "check_sys";
-    const char *xml_check_trojans = "check_trojans";
     const char *xml_check_unixaudit = "check_unixaudit";
     const char *xml_check_winapps = "check_winapps";
     const char *xml_check_winaudit = "check_winaudit";
@@ -118,10 +114,6 @@ int Read_Rootcheck(XML_NODE node, void *configp, __attribute__((unused)) void *m
                 mwarn(XML_VALUEERR, node[i]->element, node[i]->content);
                 return (OS_INVALID);
             }
-        } else if (strcmp(node[i]->element, xml_rootkit_files) == 0) {
-            os_strdup(node[i]->content, rootcheck->rootkit_files);
-        } else if (strcmp(node[i]->element, xml_rootkit_trojans) == 0) {
-            os_strdup(node[i]->content, rootcheck->rootkit_trojans);
         } else if (strcmp(node[i]->element, xml_winaudit) == 0) {
 #ifdef WIN32
             rootcheck->checks.rc_winaudit = 1;
@@ -292,8 +284,6 @@ void Free_Rootcheck(rkconfig * config){
         int i;
         free((char*) config->workdir);
         free(config->basedir);
-        free(config->rootkit_files);
-        free(config->rootkit_trojans);
         if (config->unixaudit) {
             for (i=0; config->unixaudit[i] != NULL; i++) {
                 free(config->unixaudit[i]);

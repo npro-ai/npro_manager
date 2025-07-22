@@ -78,8 +78,6 @@ int rootcheck_init(int test_config)
     rootcheck.unixaudit = NULL;
     rootcheck.ignore = NULL;
     rootcheck.ignore_sregex = NULL;
-    rootcheck.rootkit_files = NULL;
-    rootcheck.rootkit_trojans = NULL;
     rootcheck.winaudit = NULL;
     rootcheck.winmalware = NULL;
     rootcheck.winapps = NULL;
@@ -93,12 +91,10 @@ int rootcheck_init(int test_config)
     rootcheck.time = ROOTCHECK_WAIT;
 
     rootcheck.checks.rc_dev = 1;
-    rootcheck.checks.rc_files = 0;
     rootcheck.checks.rc_if = 1;
     rootcheck.checks.rc_pids = 1;
     rootcheck.checks.rc_ports = 1;
     rootcheck.checks.rc_sys = 1;
-    rootcheck.checks.rc_trojans = 0;
 #ifdef WIN32
     rootcheck.checks.rc_winaudit = 0;
     rootcheck.checks.rc_winmalware = 0;

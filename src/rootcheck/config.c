@@ -51,18 +51,14 @@ cJSON *getRootcheckConfig(void) {
 
     if (rootcheck.disabled) cJSON_AddStringToObject(rtck,"disabled","yes"); else cJSON_AddStringToObject(rtck,"disabled","no");
     if (rootcheck.basedir) cJSON_AddStringToObject(rtck,"base_directory",rootcheck.basedir);
-    if (rootcheck.rootkit_files) cJSON_AddStringToObject(rtck,"rootkit_files",rootcheck.rootkit_files);
-    if (rootcheck.rootkit_trojans) cJSON_AddStringToObject(rtck,"rootkit_trojans",rootcheck.rootkit_trojans);
     if (rootcheck.scanall) cJSON_AddStringToObject(rtck,"scanall","yes"); else cJSON_AddStringToObject(rtck,"scanall","no");
     if (rootcheck.skip_nfs) cJSON_AddStringToObject(rtck,"skip_nfs","yes"); else cJSON_AddStringToObject(rtck,"skip_nfs","no");
     cJSON_AddNumberToObject(rtck,"frequency",rootcheck.time);
     if (rootcheck.checks.rc_dev) cJSON_AddStringToObject(rtck,"check_dev","yes"); else cJSON_AddStringToObject(rtck,"check_dev","no");
-    if (rootcheck.checks.rc_files) cJSON_AddStringToObject(rtck,"check_files","yes"); else cJSON_AddStringToObject(rtck,"check_files","no");
     if (rootcheck.checks.rc_if) cJSON_AddStringToObject(rtck,"check_if","yes"); else cJSON_AddStringToObject(rtck,"check_if","no");
     if (rootcheck.checks.rc_pids) cJSON_AddStringToObject(rtck,"check_pids","yes"); else cJSON_AddStringToObject(rtck,"check_pids","no");
     if (rootcheck.checks.rc_ports) cJSON_AddStringToObject(rtck,"check_ports","yes"); else cJSON_AddStringToObject(rtck,"check_ports","no");
     if (rootcheck.checks.rc_sys) cJSON_AddStringToObject(rtck,"check_sys","yes"); else cJSON_AddStringToObject(rtck,"check_sys","no");
-    if (rootcheck.checks.rc_trojans) cJSON_AddStringToObject(rtck,"check_trojans","yes"); else cJSON_AddStringToObject(rtck,"check_trojans","no");
 #ifdef WIN32
     if (rootcheck.checks.rc_winaudit) cJSON_AddStringToObject(rtck,"check_winaudit","yes"); else cJSON_AddStringToObject(rtck,"check_winaudit","no");
     if (rootcheck.checks.rc_winmalware) cJSON_AddStringToObject(rtck,"check_winmalware","yes"); else cJSON_AddStringToObject(rtck,"check_winmalware","no");

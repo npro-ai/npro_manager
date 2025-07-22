@@ -105,45 +105,6 @@ void run_rk_check()
         mtinfo(ARGV0, "Starting rootcheck scan.");
     }
 
-    /* Check for Rootkits */
-    /* Open rootkit_files and pass the pointer to check_rc_files */
-    if (rootcheck.checks.rc_files) {
-        if (!rootcheck.rootkit_files) {
-#ifndef WIN32
-            mterror(ARGV0, "No rootcheck_files file configured.");
-#endif
-        } else {
-            fp = wfopen(rootcheck.rootkit_files, "r");
-            if (!fp) {
-                mterror(ARGV0, "No rootcheck_files file: '%s'", rootcheck.rootkit_files);
-            }
-
-            else {
-                check_rc_files(rootcheck.basedir, fp);
-                fclose(fp);
-            }
-        }
-    }
-
-    /* Check for trojan entries in common binaries */
-    if (rootcheck.checks.rc_trojans) {
-        if (!rootcheck.rootkit_trojans) {
-#ifndef WIN32
-            mterror(ARGV0, "No rootcheck_trojans file configured.");
-#endif
-        } else {
-            fp = wfopen(rootcheck.rootkit_trojans, "r");
-            if (!fp) {
-                mterror(ARGV0, "No rootcheck_trojans file: '%s'", rootcheck.rootkit_trojans);
-            } else {
-#ifndef HPUX
-                check_rc_trojans(rootcheck.basedir, fp);
-#endif
-                fclose(fp);
-            }
-        }
-    }
-
 #ifdef WIN32
     /* Get process list */
     plist = os_get_process_list();

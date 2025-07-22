@@ -48,8 +48,6 @@ int Read_Rootcheck_Config(const char *cfgfile)
     /* XML Definitions */
     const char *(xml_base_dir[]) = {xml_rootcheck, "base_directory", NULL};
     const char *(xml_workdir[]) = {xml_rootcheck, "work_directory", NULL};
-    const char *(xml_rootkit_files[]) = {xml_rootcheck, "rootkit_files", NULL};
-    const char *(xml_rootkit_trojans[]) = {xml_rootcheck, "rootkit_trojans", NULL};
     const char *(xml_rootkit_unixaudit[]) = {xml_rootcheck, "system_audit", NULL};
     const char *(xml_rootkit_winaudit[]) = {xml_rootcheck, "windows_audit", NULL};
     const char *(xml_rootkit_winapps[]) = {xml_rootcheck, "windows_apps", NULL};
@@ -61,12 +59,10 @@ int Read_Rootcheck_Config(const char *cfgfile)
     char *str = NULL;
 #endif
     const char *(xml_check_dev[]) = {xml_rootcheck, "check_dev", NULL};
-    const char *(xml_check_files[]) = {xml_rootcheck, "check_files", NULL};
     const char *(xml_check_if[]) = {xml_rootcheck, "check_if", NULL};
     const char *(xml_check_pids[]) = {xml_rootcheck, "check_pids", NULL};
     const char *(xml_check_ports[]) = {xml_rootcheck, "check_ports", NULL};
     const char *(xml_check_sys[]) = {xml_rootcheck, "check_sys", NULL};
-    const char *(xml_check_trojans[]) = {xml_rootcheck, "check_trojans", NULL};
 #ifdef WIN32
     const char *(xml_check_winapps[]) = {xml_rootcheck, "check_winapps", NULL};
     const char *(xml_check_winaudit[]) = {xml_rootcheck, "check_winaudit", NULL};
@@ -122,10 +118,6 @@ int Read_Rootcheck_Config(const char *cfgfile)
         rootcheck.workdir  = OS_GetOneContentforElement(&xml, xml_workdir);
     }
 
-    rootcheck.rootkit_files  = OS_GetOneContentforElement
-                               (&xml, xml_rootkit_files);
-    rootcheck.rootkit_trojans  = OS_GetOneContentforElement
-                                 (&xml, xml_rootkit_trojans);
     rootcheck.unixaudit = OS_GetContents
                           (&xml, xml_rootkit_unixaudit);
     rootcheck.winaudit  = OS_GetOneContentforElement
@@ -136,12 +128,10 @@ int Read_Rootcheck_Config(const char *cfgfile)
                             (&xml, xml_rootkit_winmalware);
     rootcheck.basedir  = OS_GetOneContentforElement(&xml, xml_base_dir);
     rootcheck.checks.rc_dev = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_dev), 1);
-    rootcheck.checks.rc_files = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_files), 1);
     rootcheck.checks.rc_if = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_if), 1);
     rootcheck.checks.rc_pids = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_pids), 1);
     rootcheck.checks.rc_ports = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_ports), 1);
     rootcheck.checks.rc_sys = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_sys), 1);
-    rootcheck.checks.rc_trojans = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_trojans), 1);
 #ifdef WIN32
     rootcheck.checks.rc_winapps = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_winapps), 1);
     rootcheck.checks.rc_winaudit = eval_bool2(OS_GetOneContentforElement(&xml, xml_check_winaudit), 1);
