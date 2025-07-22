@@ -6,6 +6,7 @@
 #include <ifilesystem_wrapper.hpp>
 
 #include "wm_exec.h"
+#include "logging_helper.h"
 
 #include <json.hpp>
 
@@ -25,6 +26,7 @@ public:
     /// @param fileSystemWrapper File system wrapper for file operations
     SecurityConfigurationAssessment(std::string dbFolderPath,
                                     std::string agentUUID,
+                                    std::function<void(const modules_log_level_t, const std::string&)> logFunction,
                                     std::shared_ptr<IDBSync> dbSync = nullptr,
                                     std::shared_ptr<IFileSystemWrapper> fileSystemWrapper = nullptr);
 
@@ -92,4 +94,7 @@ private:
 
     /// @brief Flag to keep the module running
     std::atomic<bool> m_keepRunning {true};
+
+    /// @brief Log function
+    std::function<void(const modules_log_level_t, const std::string&)> m_logFunction;
 };

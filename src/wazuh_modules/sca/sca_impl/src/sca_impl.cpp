@@ -36,10 +36,12 @@ constexpr auto CHECK_SQL_STATEMENT {
 SecurityConfigurationAssessment::SecurityConfigurationAssessment(
     std::string dbFolderPath,
     std::string agentUUID,
+    std::function<void(const modules_log_level_t, const std::string&)> logFunction,
     std::shared_ptr<IDBSync> dbSync,
     std::shared_ptr<IFileSystemWrapper> fileSystemWrapper)
     : m_agentUUID(std::move(agentUUID))
     , m_dBSync(std::move(dbSync))
+    , m_logFunction(logFunction)
     // , m_dBSync(dbSync ? std::move(dbSync)
     //                   : std::make_shared<DBSync>(
     //                         HostType::AGENT,
@@ -52,6 +54,8 @@ SecurityConfigurationAssessment::SecurityConfigurationAssessment(
 {
 }
 
+#include <iostream>
+
 void SecurityConfigurationAssessment::Run()
 {
     if (!m_enabled)
@@ -63,6 +67,8 @@ void SecurityConfigurationAssessment::Run()
     m_keepRunning = true;
 
     // LogInfo("SCA module running.");
+    m_logFunction(LOG_INFO, "SCA module running.");
+    std::cout << "SCA module running.\n";
 
     while(m_keepRunning)
     {

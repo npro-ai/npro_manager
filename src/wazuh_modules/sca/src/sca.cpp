@@ -56,14 +56,13 @@ int sca_sync_message(const char* data)
 }
 
 SCA::SCA()
-: m_logFunction {nullptr}
 {
 }
 
 void SCA::init(const std::function<void(const modules_log_level_t, const std::string&)> logFunction)
 {
     // TODO Start doing whatever the module does
-    m_sca = std::make_unique<SecurityConfigurationAssessment>(".", "agent-uuid-placeholder");
+    m_sca = std::make_unique<SecurityConfigurationAssessment>(".", "agent-uuid-placeholder", logFunction);
 }
 
 void SCA::destroy()

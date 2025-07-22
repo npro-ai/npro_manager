@@ -40,7 +40,5 @@ private:
     SCA(const SCA&) = delete;
     SCA& operator=(const SCA&) = delete;
 
-    std::function<void(const modules_log_level_t, const std::string&)> m_logFunction;
-
     std::unique_ptr<SecurityConfigurationAssessment> m_sca;
 };
