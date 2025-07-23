@@ -103,7 +103,6 @@ full_filename,owner_name,group_name,mode,type,prot_permissions,size_bytes,size_e
 /var/ossec/etc/ossec.conf,root,wazuh,660,file,-rw-rw----,5581,0.1
 /var/ossec/etc/local_internal_options.conf,root,wazuh,640,file,-rw-r-----,320,0.1
 /var/ossec/etc/shared/cis_rhel5_linux_rcl.txt,root,wazuh,660,file,-rw-rw----,35781,0.1
-/var/ossec/etc/shared/rootkit_files.txt,root,wazuh,660,file,-rw-rw----,16174,0.1
 /var/ossec/etc/shared/system_audit_rcl.txt,root,wazuh,660,file,-rw-rw----,4466,0.1
 /var/ossec/etc/shared/cis_rhel6_linux_rcl.txt,root,wazuh,660,file,-rw-rw----,33870,0.1
 /var/ossec/etc/shared/cis_win2012r2_memberL1_rcl.txt,root,wazuh,660,file,-rw-rw----,100530,0.1
@@ -114,7 +113,6 @@ full_filename,owner_name,group_name,mode,type,prot_permissions,size_bytes,size_e
 /var/ossec/etc/shared/cis_debian_linux_rcl.txt,root,wazuh,660,file,-rw-rw----,12576,0.1
 /var/ossec/etc/shared/cis_apache2224_rcl.txt,root,wazuh,660,file,-rw-rw----,28411,0.1
 /var/ossec/etc/shared/cis_win2012r2_memberL2_rcl.txt,root,wazuh,660,file,-rw-rw----,376002,0.1
-/var/ossec/etc/shared/rootkit_trojans.txt,root,wazuh,660,file,-rw-rw----,5547,0.1
 /var/ossec/etc/shared/cis_sles11_linux_rcl.txt,root,wazuh,660,file,-rw-rw----,34376,0.1
 /var/ossec/etc/shared/win_malware_rcl.txt,root,wazuh,660,file,-rw-rw----,7314,0.1
 /var/ossec/etc/shared/cis_mysql5-6_community_rcl.txt,root,wazuh,660,file,-rw-rw----,7609,0.1

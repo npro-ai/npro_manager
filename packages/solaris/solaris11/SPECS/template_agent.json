@@ -575,22 +575,6 @@
         "type": "file",
         "user": "wazuh"
     },
-    "/var/ossec/etc/shared/rootkit_files.txt": {
-        "class": "static",
-        "group": "wazuh",
-        "mode": "0644",
-        "prot": "-rw-r--r--",
-        "type": "file",
-        "user": "wazuh"
-    },
-    "/var/ossec/etc/shared/rootkit_trojans.txt": {
-        "class": "static",
-        "group": "wazuh",
-        "mode": "0644",
-        "prot": "-rw-r--r--",
-        "type": "file",
-        "user": "wazuh"
-    },
     "/var/ossec/etc/shared/system_audit_rcl.txt": {
         "class": "static",
         "group": "wazuh",
