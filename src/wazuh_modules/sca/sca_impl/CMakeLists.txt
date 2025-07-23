@@ -85,7 +85,7 @@ if(NOT PCRE2_LIB)
 endif()
 
 add_library(
-    SCAImpl STATIC
+    SCAImpl SHARED
     src/sca_impl.cpp
     src/yaml_document.cpp
     src/yaml_node.cpp

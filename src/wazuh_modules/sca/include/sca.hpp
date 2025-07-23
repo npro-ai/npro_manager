@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sca.h"
+#include <sca_impl.hpp>
 
 #include <functional>
 #include <string>
@@ -38,4 +39,6 @@ private:
     SCA& operator=(const SCA&) = delete;
 
     std::function<void(const modules_log_level_t, const std::string&)> m_logFunction;
+
+    std::unique_ptr<SecurityConfigurationAssessment> m_sca;
 };
