@@ -8,7 +8,10 @@
 #include <stringHelper.h>
 #include <sysInfo.hpp>
 #include <sysInfoInterface.h>
-#include <wm_exec.h>
+
+// extern "C" {
+// #include <wm_exec.h>
+// }
 
 #include <stack>
 #include <stdexcept>

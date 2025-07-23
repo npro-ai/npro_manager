@@ -3,7 +3,10 @@
 #include "sca.h"
 #include <sca_impl.hpp>
 
+#include <sca_impl.hpp>
+
 #include <functional>
+#include <memory>
 #include <string>
 
 // Define EXPORTED for any platform
