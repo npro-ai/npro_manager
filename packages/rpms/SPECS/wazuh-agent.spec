@@ -110,8 +110,8 @@ cp -pr %{_localstatedir}/* ${RPM_BUILD_ROOT}%{_localstatedir}/
 mkdir -p ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
 sed -i "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/ossec-hids-rh.init
 install -m 0755 src/init/templates/ossec-hids-rh.init ${RPM_BUILD_ROOT}%{_initrddir}/wazuh-agent
-sed -i "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/wazuh-agent.service
-install -m 0644 src/init/templates/wazuh-agent.service ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
+sed -i "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/npro-agent.service
+install -m 0644 src/init/templates/npro-agent.service ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
 
 # Clean the preinstalled configuration assesment files
 rm -f ${RPM_BUILD_ROOT}%{_localstatedir}/ruleset/sca/*
@@ -235,7 +235,7 @@ if [ $1 = 2 ]; then
   fi
 
   if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
-    systemctl stop wazuh-agent.service > /dev/null 2>&1
+    systemctl stop npro-agent.service > /dev/null 2>&1
     touch %{_localstatedir}/tmp/wazuh.restart
   # Check for SysV
   elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
@@ -515,7 +515,7 @@ if [ $1 = 0 ]; then
   # Stop the services before uninstall the package
   # Check for systemd
   if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
-    systemctl stop wazuh-agent.service > /dev/null 2>&1
+    systemctl stop npro-agent.service > /dev/null 2>&1
   # Check for SysV
   elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
     service wazuh-agent stop > /dev/null 2>&1
@@ -600,8 +600,8 @@ fi
 
 # posttrans code is the last thing executed in a install/upgrade
 %posttrans
-if [ -f %{_sysconfdir}/systemd/system/wazuh-agent.service ]; then
-  rm -rf %{_sysconfdir}/systemd/system/wazuh-agent.service
+if [ -f %{_sysconfdir}/systemd/system/npro-agent.service ]; then
+  rm -rf %{_sysconfdir}/systemd/system/npro-agent.service
   systemctl daemon-reload > /dev/null 2>&1
 fi
 
@@ -609,7 +609,7 @@ if [ -f %{_localstatedir}/tmp/wazuh.restart ]; then
   rm -f %{_localstatedir}/tmp/wazuh.restart
   if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 ; then
     systemctl daemon-reload > /dev/null 2>&1
-    systemctl restart wazuh-agent.service > /dev/null 2>&1
+    systemctl restart npro-agent.service > /dev/null 2>&1
   elif command -v service > /dev/null 2>&1; then
     service wazuh-agent restart > /dev/null 2>&1
   else
@@ -637,7 +637,7 @@ rm -fr %{buildroot}
 %defattr(-,root,root)
 %config(missingok) %{_initrddir}/wazuh-agent
 %attr(640, root, wazuh) %verify(not md5 size mtime) %ghost %{_sysconfdir}/ossec-init.conf
-/usr/lib/systemd/system/wazuh-agent.service
+/usr/lib/systemd/system/npro-agent.service
 %dir %attr(750, root, wazuh) %{_localstatedir}
 %attr(440, wazuh, wazuh) %{_localstatedir}/VERSION.json
 %attr(750, root, wazuh) %{_localstatedir}/agentless
