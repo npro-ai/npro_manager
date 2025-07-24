@@ -136,8 +136,8 @@ add_parameter () {
 
 get_deprecated_vars () {
 
-    if [ -n "${WAZUH_MANAGER_IP}" ] && [ -z "${WAZUH_MANAGER}" ]; then
-        WAZUH_MANAGER=${WAZUH_MANAGER_IP}
+    if [ -n "${NPRO_MANAGER_IP}" ] && [ -z "${NPRO_MANAGER}" ]; then
+        NPRO_MANAGER=${NPRO_MANAGER_IP}
     fi
     if [ -n "${WAZUH_AUTHD_SERVER}" ] && [ -z "${WAZUH_REGISTRATION_SERVER}" ]; then
         WAZUH_REGISTRATION_SERVER=${WAZUH_AUTHD_SERVER}
@@ -160,15 +160,15 @@ get_deprecated_vars () {
     if [ -n "${WAZUH_KEY}" ] && [ -z "${WAZUH_REGISTRATION_KEY}" ]; then
         WAZUH_REGISTRATION_KEY=${WAZUH_KEY}
     fi
-    if [ -n "${WAZUH_GROUP}" ] && [ -z "${WAZUH_AGENT_GROUP}" ]; then
-        WAZUH_AGENT_GROUP=${WAZUH_GROUP}
+    if [ -n "${WAZUH_GROUP}" ] && [ -z "${NPRO_AGENT_GROUP}" ]; then
+        NPRO_AGENT_GROUP=${WAZUH_GROUP}
     fi
 
 }
 
 set_vars () {
 
-    export WAZUH_MANAGER
+    export NPRO_MANAGER
     export WAZUH_MANAGER_PORT
     export WAZUH_PROTOCOL
     export WAZUH_REGISTRATION_SERVER
@@ -179,11 +179,11 @@ set_vars () {
     export WAZUH_REGISTRATION_CA
     export WAZUH_REGISTRATION_CERTIFICATE
     export WAZUH_REGISTRATION_KEY
-    export WAZUH_AGENT_NAME
-    export WAZUH_AGENT_GROUP
+    export NPRO_AGENT_NAME
+    export NPRO_AGENT_GROUP
     export ENROLLMENT_DELAY
     # The following variables are yet supported but all of them are deprecated
-    export WAZUH_MANAGER_IP
+    export NPRO_MANAGER_IP
     export WAZUH_NOTIFY_TIME
     export WAZUH_AUTHD_SERVER
     export WAZUH_AUTHD_PORT
@@ -202,12 +202,12 @@ set_vars () {
 
 unset_vars() {
 
-    vars=(WAZUH_MANAGER_IP WAZUH_PROTOCOL WAZUH_MANAGER_PORT WAZUH_NOTIFY_TIME \
+    vars=(NPRO_MANAGER_IP WAZUH_PROTOCOL WAZUH_MANAGER_PORT WAZUH_NOTIFY_TIME \
           WAZUH_TIME_RECONNECT WAZUH_AUTHD_SERVER WAZUH_AUTHD_PORT WAZUH_PASSWORD \
-          WAZUH_AGENT_NAME WAZUH_GROUP WAZUH_CERTIFICATE WAZUH_KEY WAZUH_PEM \
-          WAZUH_MANAGER WAZUH_REGISTRATION_SERVER WAZUH_REGISTRATION_PORT \
+          NPRO_AGENT_NAME WAZUH_GROUP WAZUH_CERTIFICATE WAZUH_KEY WAZUH_PEM \
+          NPRO_MANAGER WAZUH_REGISTRATION_SERVER WAZUH_REGISTRATION_PORT \
           WAZUH_REGISTRATION_PASSWORD WAZUH_KEEP_ALIVE_INTERVAL WAZUH_REGISTRATION_CA \
-          WAZUH_REGISTRATION_CERTIFICATE WAZUH_REGISTRATION_KEY WAZUH_AGENT_GROUP \
+          WAZUH_REGISTRATION_CERTIFICATE WAZUH_REGISTRATION_KEY NPRO_AGENT_GROUP \
           ENROLLMENT_DELAY)
 
     for var in "${vars[@]}"; do
@@ -295,20 +295,20 @@ main () {
 
     get_deprecated_vars
 
-    if [ -z "${WAZUH_MANAGER}" ] && [ -n "${WAZUH_PROTOCOL}" ]; then
+    if [ -z "${NPRO_MANAGER}" ] && [ -n "${WAZUH_PROTOCOL}" ]; then
         PROTOCOLS=( $(tolower "${WAZUH_PROTOCOL//,/ }") )
         edit_value_tag "protocol" "${PROTOCOLS[0]}"
     fi
 
-    if [ -n "${WAZUH_MANAGER}" ]; then
+    if [ -n "${NPRO_MANAGER}" ]; then
         if [ ! -f "${INSTALLDIR}/logs/ossec.log" ]; then
             touch -f "${INSTALLDIR}/logs/ossec.log"
             chmod 660 "${INSTALLDIR}/logs/ossec.log"
             chown root:wazuh "${INSTALLDIR}/logs/ossec.log"
         fi
 
-        # Check if multiples IPs are defined in variable WAZUH_MANAGER
-        ADDRESSES=( ${WAZUH_MANAGER//,/ } ) 
+        # Check if multiples IPs are defined in variable NPRO_MANAGER
+        ADDRESSES=( ${NPRO_MANAGER//,/ } ) 
         PROTOCOLS=( $(tolower "${WAZUH_PROTOCOL//,/ }") )
         # Get uniques values if all protocols are the same
         if ( [ "${#PROTOCOLS[@]}" -ge "${#ADDRESSES[@]}" ] && ( ( ! echo "${PROTOCOLS[@]}" | grep -q -w "tcp" ) || ( ! echo "${PROTOCOLS[@]}" | grep -q -w "udp" ) ) ) || [ ${#PROTOCOLS[@]} -eq 0 ] || ( ! echo "${PROTOCOLS[@]}" | grep -q -w "udp" ) ; then
@@ -320,7 +320,7 @@ main () {
 
     edit_value_tag "port" "${WAZUH_MANAGER_PORT}"
 
-    if [ -n "${WAZUH_REGISTRATION_SERVER}" ] || [ -n "${WAZUH_REGISTRATION_PORT}" ] || [ -n "${WAZUH_REGISTRATION_CA}" ] || [ -n "${WAZUH_REGISTRATION_CERTIFICATE}" ] || [ -n "${WAZUH_REGISTRATION_KEY}" ] || [ -n "${WAZUH_AGENT_NAME}" ] || [ -n "${WAZUH_AGENT_GROUP}" ] || [ -n "${ENROLLMENT_DELAY}" ] || [ -n "${WAZUH_REGISTRATION_PASSWORD}" ]; then
+    if [ -n "${WAZUH_REGISTRATION_SERVER}" ] || [ -n "${WAZUH_REGISTRATION_PORT}" ] || [ -n "${WAZUH_REGISTRATION_CA}" ] || [ -n "${WAZUH_REGISTRATION_CERTIFICATE}" ] || [ -n "${WAZUH_REGISTRATION_KEY}" ] || [ -n "${NPRO_AGENT_NAME}" ] || [ -n "${NPRO_AGENT_GROUP}" ] || [ -n "${ENROLLMENT_DELAY}" ] || [ -n "${WAZUH_REGISTRATION_PASSWORD}" ]; then
         add_auto_enrollment
         set_auto_enrollment_tag_value "manager_address" "${WAZUH_REGISTRATION_SERVER}"
         set_auto_enrollment_tag_value "port" "${WAZUH_REGISTRATION_PORT}"
@@ -328,8 +328,8 @@ main () {
         set_auto_enrollment_tag_value "agent_certificate_path" "${WAZUH_REGISTRATION_CERTIFICATE}"
         set_auto_enrollment_tag_value "agent_key_path" "${WAZUH_REGISTRATION_KEY}"
         set_auto_enrollment_tag_value "authorization_pass_path" "${WAZUH_REGISTRATION_PASSWORD_PATH}"
-        set_auto_enrollment_tag_value "agent_name" "${WAZUH_AGENT_NAME}"
-        set_auto_enrollment_tag_value "groups" "${WAZUH_AGENT_GROUP}"
+        set_auto_enrollment_tag_value "agent_name" "${NPRO_AGENT_NAME}"
+        set_auto_enrollment_tag_value "groups" "${NPRO_AGENT_GROUP}"
         set_auto_enrollment_tag_value "delay_after_enrollment" "${ENROLLMENT_DELAY}"
         delete_blank_lines "${TMP_ENROLLMENT}"
         concat_conf
