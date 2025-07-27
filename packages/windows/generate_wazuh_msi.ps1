@@ -2,7 +2,7 @@
 # This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2
 
 param (
-    [string]$MSI_NAME = "wazuh-agent.msi",
+    [string]$MSI_NAME = "npro-agent.msi",
     [string]$SIGN = "no",
     [string]$WIX_TOOLS_PATH = "",
     [string]$SIGN_TOOLS_PATH = "",
@@ -32,7 +32,7 @@ if(($help.isPresent)) {
         * WAZUH:
           $ ./generate_wazuh_msi.ps1  -MSI_NAME {{ NAME }} -SIGN {{ yes|no }} -WIX_TOOLS_PATH {{ PATH }} -SIGN_TOOLS_PATH {{ PATH }}
             Build a devel msi:    $ ./generate_wazuh_msi.ps1 -MSI_NAME wazuh-agent_4.9.0-0_windows_0ceb378.msi -SIGN no
-            Build a prod msi:     $ ./generate_wazuh_msi.ps1 -MSI_NAME wazuh-agent-4.9.0-1.msi -SIGN yes
+            Build a prod msi:     $ ./generate_wazuh_msi.ps1 -MSI_NAME npro-agent-4.9.0-1.msi -SIGN yes
     "
     Exit
 }
@@ -136,7 +136,7 @@ function ExtractDebugSymbols(){
   #compress every pdb file in current folder
 	$pdbFiles = Get-ChildItem -Filter ".\*.pdb"
 
-    $ZIP_NAME = $MSI_NAME -replace 'wazuh-agent', 'wazuh-agent-debug-symbols' -replace '\.msi$', '.zip'
+    $ZIP_NAME = $MSI_NAME -replace 'npro-agent', 'npro-agent-debug-symbols' -replace '\.msi$', '.zip'
 
 	Write-Host "Compressing debug symbols to $ZIP_NAME"
 	Compress-Archive -Path $pdbFiles -Force -DestinationPath "$ZIP_NAME"

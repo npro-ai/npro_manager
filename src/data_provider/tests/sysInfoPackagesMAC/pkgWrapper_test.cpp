@@ -230,7 +230,7 @@ TEST_F(PKGWrapperTest, pkgVersionXML)
     std::string inputPath;
     inputPath += getwd(NULL);
     inputPath += "/input_files";
-    std::string package { "com.wazuh.pkg.wazuh-agent.plist" };
+    std::string package { "com.wazuh.pkg.npro-agent.plist" };
 
     struct PackageContext ctx
     {
@@ -238,10 +238,10 @@ TEST_F(PKGWrapperTest, pkgVersionXML)
     };
     std::shared_ptr<PKGWrapper> wrapper;
     EXPECT_NO_THROW(wrapper = std::make_shared<PKGWrapper>(ctx));
-    EXPECT_EQ(wrapper->name(), "wazuh-agent");
+    EXPECT_EQ(wrapper->name(), "npro-agent");
     EXPECT_EQ(wrapper->version(), "4.10.1");
     EXPECT_EQ(wrapper->groups(), " ");
-    EXPECT_EQ(wrapper->description(), "com.wazuh.pkg.wazuh-agent");
+    EXPECT_EQ(wrapper->description(), "com.wazuh.pkg.npro-agent");
     EXPECT_EQ(wrapper->architecture(), " ");
     EXPECT_EQ(wrapper->format(), "pkg");
     EXPECT_EQ(wrapper->osPatch(), "");

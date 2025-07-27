@@ -41,8 +41,8 @@ $TEST_ARRAY=@(
               @("WAZUH_REGISTRATION_CA ", "/var/ossec/etc/testsslmanager.cert", "<server_ca_path>", "</server_ca_path>"),
               @("WAZUH_REGISTRATION_CERTIFICATE ", "/var/ossec/etc/testsslmanager.cert", "<agent_certificate_path>", "</agent_certificate_path>"),
               @("WAZUH_REGISTRATION_KEY ", "/var/ossec/etc/testsslmanager.key", "<agent_key_path>", "</agent_key_path>"),
-              @("WAZUH_AGENT_NAME ", "test-agent", "<agent_name>", "</agent_name>"),
-              @("WAZUH_AGENT_GROUP ", "test-group", "<groups>", "</groups>"),
+              @("NPRO_AGENT_NAME ", "test-agent", "<agent_name>", "</agent_name>"),
+              @("NPRO_AGENT_GROUP ", "test-group", "<groups>", "</groups>"),
               @("ENROLLMENT_DELAY ", "10", "<delay_after_enrollment>", "</delay_after_enrollment>")
 )
 
@@ -114,8 +114,8 @@ function test($vars)
 Write-Output "Download package: https://s3.us-west-1.amazonaws.com/packages-dev.wazuh.com/warehouse/pullrequests/$MAJOR.$MINOR/windows/wazuh-agent-$VERSION-0.commit$SHA.msi"
 Invoke-WebRequest -Uri "https://s3.us-west-1.amazonaws.com/packages-dev.wazuh.com/warehouse/pullrequests/$MAJOR.$MINOR/windows/wazuh-agent-$VERSION-0.commit$SHA.msi" -OutFile "wazuh-agent-$VERSION-0.commit$SHA.msi"
 
-install_wazuh "WAZUH_MANAGER=1.1.1.1 WAZUH_MANAGER_PORT=7777 WAZUH_PROTOCOL=udp WAZUH_REGISTRATION_SERVER=2.2.2.2 WAZUH_REGISTRATION_PORT=8888 WAZUH_REGISTRATION_PASSWORD=password WAZUH_KEEP_ALIVE_INTERVAL=10 WAZUH_TIME_RECONNECT=10 WAZUH_REGISTRATION_CA=/var/ossec/etc/testsslmanager.cert WAZUH_REGISTRATION_CERTIFICATE=/var/ossec/etc/testsslmanager.cert WAZUH_REGISTRATION_KEY=/var/ossec/etc/testsslmanager.key WAZUH_AGENT_NAME=test-agent WAZUH_AGENT_GROUP=test-group ENROLLMENT_DELAY=10"
-test "WAZUH_MANAGER WAZUH_MANAGER_PORT WAZUH_PROTOCOL WAZUH_REGISTRATION_SERVER WAZUH_REGISTRATION_PORT WAZUH_REGISTRATION_PASSWORD WAZUH_KEEP_ALIVE_INTERVAL WAZUH_TIME_RECONNECT WAZUH_REGISTRATION_CA WAZUH_REGISTRATION_CERTIFICATE WAZUH_REGISTRATION_KEY WAZUH_AGENT_NAME WAZUH_AGENT_GROUP ENROLLMENT_DELAY "
+install_wazuh "WAZUH_MANAGER=1.1.1.1 WAZUH_MANAGER_PORT=7777 WAZUH_PROTOCOL=udp WAZUH_REGISTRATION_SERVER=2.2.2.2 WAZUH_REGISTRATION_PORT=8888 WAZUH_REGISTRATION_PASSWORD=password WAZUH_KEEP_ALIVE_INTERVAL=10 WAZUH_TIME_RECONNECT=10 WAZUH_REGISTRATION_CA=/var/ossec/etc/testsslmanager.cert WAZUH_REGISTRATION_CERTIFICATE=/var/ossec/etc/testsslmanager.cert WAZUH_REGISTRATION_KEY=/var/ossec/etc/testsslmanager.key NPRO_AGENT_NAME=test-agent NPRO_AGENT_GROUP=test-group ENROLLMENT_DELAY=10"
+test "WAZUH_MANAGER WAZUH_MANAGER_PORT WAZUH_PROTOCOL WAZUH_REGISTRATION_SERVER WAZUH_REGISTRATION_PORT WAZUH_REGISTRATION_PASSWORD WAZUH_KEEP_ALIVE_INTERVAL WAZUH_TIME_RECONNECT WAZUH_REGISTRATION_CA WAZUH_REGISTRATION_CERTIFICATE WAZUH_REGISTRATION_KEY NPRO_AGENT_NAME NPRO_AGENT_GROUP ENROLLMENT_DELAY "
 remove_wazuh
 
 install_wazuh "WAZUH_MANAGER=1.1.1.1"
@@ -162,12 +162,12 @@ install_wazuh "WAZUH_REGISTRATION_KEY=/var/ossec/etc/testsslmanager.key"
 test "WAZUH_REGISTRATION_KEY "
 remove_wazuh
 
-install_wazuh "WAZUH_AGENT_NAME=test-agent"
-test "WAZUH_AGENT_NAME "
+install_wazuh "NPRO_AGENT_NAME=test-agent"
+test "NPRO_AGENT_NAME "
 remove_wazuh
 
-install_wazuh "WAZUH_AGENT_GROUP=test-group"
-test "WAZUH_AGENT_GROUP "
+install_wazuh "NPRO_AGENT_GROUP=test-group"
+test "NPRO_AGENT_GROUP "
 remove_wazuh
 
 install_wazuh "ENROLLMENT_DELAY=10"

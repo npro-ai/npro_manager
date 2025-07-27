@@ -41,7 +41,7 @@ public function config()
 
     home_dir= Replace(args(0), Chr(34), "")
     OS_VERSION = Replace(args(1), Chr(34), "")
-    WAZUH_MANAGER = Replace(args(2), Chr(34), "")
+    NPRO_MANAGER = Replace(args(2), Chr(34), "")
     WAZUH_MANAGER_PORT = Replace(args(3), Chr(34), "")
     WAZUH_PROTOCOL = Replace(args(4), Chr(34), "")
     NOTIFY_TIME = Replace(args(5), Chr(34), "")
@@ -53,8 +53,8 @@ public function config()
     WAZUH_REGISTRATION_CA = Replace(args(11), Chr(34), "")
     WAZUH_REGISTRATION_CERTIFICATE = Replace(args(12), Chr(34), "")
     WAZUH_REGISTRATION_KEY = Replace(args(13), Chr(34), "")
-    WAZUH_AGENT_NAME = Replace(args(14), Chr(34), "")
-    WAZUH_AGENT_GROUP = Replace(args(15), Chr(34), "")
+    NPRO_AGENT_NAME = Replace(args(14), Chr(34), "")
+    NPRO_AGENT_GROUP = Replace(args(15), Chr(34), "")
     ENROLLMENT_DELAY = Replace(args(16), Chr(34), "")
 
     ' Only try to set the configuration if variables are setted
@@ -73,19 +73,19 @@ public function config()
         strText = objFile.ReadAll
         objFile.Close
 
-        If WAZUH_MANAGER <> "" or WAZUH_MANAGER_PORT <> "" or WAZUH_PROTOCOL <> "" or WAZUH_KEEP_ALIVE_INTERVAL <> "" or WAZUH_TIME_RECONNECT <> "" Then
+        If NPRO_MANAGER <> "" or WAZUH_MANAGER_PORT <> "" or WAZUH_PROTOCOL <> "" or WAZUH_KEEP_ALIVE_INTERVAL <> "" or WAZUH_TIME_RECONNECT <> "" Then
             If WAZUH_PROTOCOL <> "" and InStr(WAZUH_PROTOCOL,",") Then
                 protocol_list=Split(LCase(WAZUH_PROTOCOL),",")
             Else
                 protocol_list=Array(LCase(WAZUH_PROTOCOL))
             End If
-            If WAZUH_MANAGER <> "" Then
+            If NPRO_MANAGER <> "" Then
                 Set re = new regexp
                 re.Pattern = "\s+<server>(.|\n)+?</server>"
-                If InStr(WAZUH_MANAGER,",") Then
-                    ip_list=Split(WAZUH_MANAGER,",")
+                If InStr(NPRO_MANAGER,",") Then
+                    ip_list=Split(NPRO_MANAGER,",")
                 Else
-                    ip_list=Array(WAZUH_MANAGER)
+                    ip_list=Array(NPRO_MANAGER)
                 End If
 
                 unique_protocol_list=get_unique_array_values(protocol_list)
@@ -152,7 +152,7 @@ public function config()
             End If
         End If
 
-        If WAZUH_REGISTRATION_SERVER <> "" or WAZUH_REGISTRATION_PORT <> "" or WAZUH_REGISTRATION_PASSWORD <> "" or WAZUH_REGISTRATION_CA <> "" or WAZUH_REGISTRATION_CERTIFICATE <> "" or WAZUH_REGISTRATION_KEY <> "" or WAZUH_AGENT_NAME <> "" or WAZUH_AGENT_GROUP <> "" or ENROLLMENT_DELAY <> "" Then
+        If WAZUH_REGISTRATION_SERVER <> "" or WAZUH_REGISTRATION_PORT <> "" or WAZUH_REGISTRATION_PASSWORD <> "" or WAZUH_REGISTRATION_CA <> "" or WAZUH_REGISTRATION_CERTIFICATE <> "" or WAZUH_REGISTRATION_KEY <> "" or NPRO_AGENT_NAME <> "" or NPRO_AGENT_GROUP <> "" or ENROLLMENT_DELAY <> "" Then
             enrollment_list = "    <enrollment>" & vbCrLf
             enrollment_list = enrollment_list & "      <enabled>yes</enabled>" & vbCrLf
             enrollment_list = enrollment_list & "    </enrollment>" & vbCrLf
@@ -187,12 +187,12 @@ public function config()
                 strText = Replace(strText, "    </enrollment>", "      <agent_key_path>" & WAZUH_REGISTRATION_KEY & "</agent_key_path>"& vbCrLf &"    </enrollment>")
             End If
 
-            If WAZUH_AGENT_NAME <> "" Then
-                strText = Replace(strText, "    </enrollment>", "      <agent_name>" & WAZUH_AGENT_NAME & "</agent_name>"& vbCrLf &"    </enrollment>")
+            If NPRO_AGENT_NAME <> "" Then
+                strText = Replace(strText, "    </enrollment>", "      <agent_name>" & NPRO_AGENT_NAME & "</agent_name>"& vbCrLf &"    </enrollment>")
             End If
 
-            If WAZUH_AGENT_GROUP <> "" Then
-                strText = Replace(strText, "    </enrollment>", "      <groups>" & WAZUH_AGENT_GROUP & "</groups>"& vbCrLf &"    </enrollment>")
+            If NPRO_AGENT_GROUP <> "" Then
+                strText = Replace(strText, "    </enrollment>", "      <groups>" & NPRO_AGENT_GROUP & "</groups>"& vbCrLf &"    </enrollment>")
             End If
 
             If ENROLLMENT_DELAY <> "" Then
@@ -365,7 +365,7 @@ Public Function CheckSvcRunning()
         Session.Property("OSSECRUNNING") = state
     End If
 
-    SERVICE = "WazuhSvc"
+    SERVICE = "NproSvc"
     Set svc = wmi.ExecQuery("Select * from Win32_Service where Name = '" & SERVICE & "'")
 
     If svc.Count <> 0 Then
@@ -386,7 +386,7 @@ End Function
 
 Public Function StartWazuhSvc()
 	Set WshShell = CreateObject("WScript.Shell")
-    StartSvc = "NET START WazuhSvc"
+    StartSvc = "NET START NproSvc"
     WshShell.run StartSvc, 0, True
 End Function
 
@@ -452,7 +452,7 @@ Public Function CreateDumpRegistryKey()
     Set objServices = objLocator.ConnectServer(".", "root\default", "", "", , , , objCtx)
     Set oReg = objServices.Get("StdRegProv")
 
-    strKeyPath = "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\wazuh-agent.exe"
+    strKeyPath = "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\npro-agent.exe"
 
     oReg.CreateKey HKEY_LOCAL_MACHINE, strKeyPath
     oReg.SetExpandedStringValue HKEY_LOCAL_MACHINE, strKeyPath, "DumpFolder",  "%LOCALAPPDATA%\WazuhCrashDumps"
