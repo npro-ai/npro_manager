@@ -52,7 +52,7 @@ function get-version {
 
 function remove_upgrade_files {
     Remove-Item -Path ".\upgrade\*"  -Exclude "*.log", "upgrade_result" -ErrorAction SilentlyContinue
-    Remove-Item -Path ".\wazuh-agent*.msi" -ErrorAction SilentlyContinue
+    Remove-Item -Path ".\npro-agent*.msi" -ErrorAction SilentlyContinue
     Remove-Item -Path ".\do_upgrade.ps1" -ErrorAction SilentlyContinue
 }
 
@@ -94,13 +94,13 @@ function get_wazuh_installation_directory {
 
 # Check process status
 function check-process {
-    $process_id = (Get-Process wazuh-agent).id
+    $process_id = (Get-Process npro-agent).id
     $counter = 10
     while($process_id -eq $null -And $counter -gt 0) {
         $counter--
         Start-Service -Name "Wazuh"
         Start-Sleep 2
-        $process_id = (Get-Process wazuh-agent).id
+        $process_id = (Get-Process npro-agent).id
     }
     write-output "$(Get-Date -format u) - Process ID: $($process_id)." >> .\upgrade\upgrade.log
 }
@@ -121,7 +121,7 @@ function check-installation {
 
 # Function to extract the version from the MSI using msiexec
 function get_msi_version {
-    $msiPath = (Get-Item ".\wazuh-agent*.msi").FullName
+    $msiPath = (Get-Item ".\npro-agent*.msi").FullName
     write-output "$(Get-Date -format u) - Extracting the version from MSI file." >> .\upgrade\upgrade.log
     try {
         # Extracting the version using msiexec and waiting for it to complete
@@ -179,7 +179,7 @@ function install {
     write-output "$(Get-Date -format u) - Starting upgrade process." >> .\upgrade\upgrade.log
 
     try {
-        $msiPath = (Get-Item ".\wazuh-agent*.msi").Name
+        $msiPath = (Get-Item ".\npro-agent*.msi").Name
 
         if ($msi_new_version -ne $null -and $msi_new_version -eq $current_version) {
             write-output "$(Get-Date -format u) - Reinstalling the same version." >> .\upgrade\upgrade.log
@@ -236,7 +236,7 @@ Start-Sleep 10
 
 # Check status file
 function Get-AgentStatus {
-    Select-String -Path '.\wazuh-agent.state' -Pattern "^status='(.+)'" | %{$_.Matches[0].Groups[1].value}
+    Select-String -Path '.\npro-agent.state' -Pattern "^status='(.+)'" | %{$_.Matches[0].Groups[1].value}
 }
 
 $status = Get-AgentStatus

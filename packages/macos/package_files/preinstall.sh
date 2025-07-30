@@ -72,9 +72,9 @@ if [ -d "${DIR}" ]; then
         mv ${DIR}/queue/ossec ${DIR}/queue/sockets
     fi
 
-    if pkgutil --pkgs | grep -i wazuh-agent-etc > /dev/null 2>&1 ; then
-        echo "Removing previous package receipt for wazuh-agent-etc"
-        pkgutil --forget com.wazuh.pkg.wazuh-agent-etc
+    if pkgutil --pkgs | grep -i npro-agent-etc > /dev/null 2>&1 ; then
+        echo "Removing previous package receipt for npro-agent-etc"
+        pkgutil --forget com.wazuh.pkg.npro-agent-etc
     fi
 fi
 

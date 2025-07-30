@@ -22,7 +22,7 @@
     alt Is localfile event
         analysisd -> analysisd: Enqueue event in event queue
         alt Queue full
-            alt Is wazuh-agent module
+            alt Is npro-agent module
                 analysisd -> state: dropped->agent++
             else Is wazuh-agentlessd module
                 analysisd -> state: dropped->agentless++
@@ -75,7 +75,7 @@
             end
         else
             alt Is decoded
-                alt Is wazuh-agent module
+                alt Is npro-agent module
                     analysisd -> state: decoded->agent++
                 else Is wazuh-agentlessd module
                     analysisd -> state: decoded->agentless++

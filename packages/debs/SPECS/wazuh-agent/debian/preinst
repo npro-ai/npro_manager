@@ -1,5 +1,5 @@
 #!/bin/sh
-# preinst script for wazuh-agent
+# preinst script for npro-agent
 
 set -e
 
@@ -20,11 +20,11 @@ case "$1" in
                 exit 1
             fi
 
-            if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
+            if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet npro-agent > /dev/null 2>&1; then
                 systemctl stop npro-agent.service > /dev/null 2>&1
                 touch ${WAZUH_TMP_DIR}/wazuh.restart
-            elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
-                service wazuh-agent stop > /dev/null 2>&1
+            elif command -v service > /dev/null 2>&1 && service npro-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
+                service npro-agent stop > /dev/null 2>&1
                 touch ${WAZUH_TMP_DIR}/wazuh.restart
             elif ${DIR}/bin/wazuh-control status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
                 touch ${WAZUH_TMP_DIR}/wazuh.restart

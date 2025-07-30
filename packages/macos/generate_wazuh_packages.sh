@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-# Program to build and package OSX wazuh-agent
+# Program to build and package OSX npro-agent
 # Wazuh package generator
 # Copyright (C) 2015, Wazuh Inc.
 #
@@ -115,27 +115,27 @@ function prepare_building_folder() {
     build_info_file="${WAZUH_PACKAGES_PATH}/specs/build-info.json"
     preinstall_script="${WAZUH_PACKAGES_PATH}/package_files/preinstall.sh"
     postinstall_script="${WAZUH_PACKAGES_PATH}/package_files/postinstall.sh"
-    packaged_directory=$CURRENT_PATH/wazuh-agent/payload
+    packaged_directory=$CURRENT_PATH/npro-agent/payload
 
-    if [ -d "$CURRENT_PATH/wazuh-agent" ]; then
+    if [ -d "$CURRENT_PATH/npro-agent" ]; then
 
         echo "\nThe wazuh agent building directory is present on this machine."
         echo "Removing it from the system."
 
-        rm -rf $CURRENT_PATH/wazuh-agent
+        rm -rf $CURRENT_PATH/npro-agent
     fi
 
-    munkipkg --create --json $CURRENT_PATH/wazuh-agent
+    munkipkg --create --json $CURRENT_PATH/npro-agent
 
-    cp -f $build_info_file $CURRENT_PATH/wazuh-agent/
+    cp -f $build_info_file $CURRENT_PATH/npro-agent/
 
-    sed -i '' "s|VERSION|$version|g" $CURRENT_PATH/wazuh-agent/$(basename $build_info_file)
-    sed -i '' "s|PACKAGE_NAME|$pkg_final_name|g" $CURRENT_PATH/wazuh-agent/$(basename $build_info_file)
+    sed -i '' "s|VERSION|$version|g" $CURRENT_PATH/npro-agent/$(basename $build_info_file)
+    sed -i '' "s|PACKAGE_NAME|$pkg_final_name|g" $CURRENT_PATH/npro-agent/$(basename $build_info_file)
 
-    cp $preinstall_script $CURRENT_PATH/wazuh-agent/scripts/preinstall
-    cp $postinstall_script $CURRENT_PATH/wazuh-agent/scripts/postinstall
+    cp $preinstall_script $CURRENT_PATH/npro-agent/scripts/preinstall
+    cp $postinstall_script $CURRENT_PATH/npro-agent/scripts/postinstall
 
-    sed -i '' "s|PACKAGE_ARCH|$ARCH|g" $CURRENT_PATH/wazuh-agent/scripts/preinstall
+    sed -i '' "s|PACKAGE_ARCH|$ARCH|g" $CURRENT_PATH/npro-agent/scripts/preinstall
 
     mkdir -p ${packaged_directory}$(dirname ${SERVICE_PATH})
     cp -p $SERVICE_PATH ${packaged_directory}$(dirname ${SERVICE_PATH})
@@ -177,7 +177,7 @@ function build_package() {
     if [ $IS_STAGE == "no" ]; then
         pkg_name="wazuh-agent_${VERSION}-${REVISION}_${ARCH}_${short_commit_hash}"
     else
-        pkg_name="wazuh-agent-${VERSION}-${REVISION}.${ARCH}"
+        pkg_name="npro-agent-${VERSION}-${REVISION}.${ARCH}"
     fi
 
     if [ -d "${INSTALLATION_PATH}" ]; then
@@ -196,10 +196,10 @@ function build_package() {
     prepare_building_folder $VERSION $pkg_name
 
     # create package
-    if munkipkg $CURRENT_PATH/wazuh-agent ; then
+    if munkipkg $CURRENT_PATH/npro-agent ; then
         echo "The wazuh agent package for macOS has been successfully built."
-        mv $CURRENT_PATH/wazuh-agent/build/* $DESTINATION/
-        symbols_pkg_name="wazuh-agent-debug-symbols-${VERSION}-${REVISION}.${ARCH}-macos"
+        mv $CURRENT_PATH/npro-agent/build/* $DESTINATION/
+        symbols_pkg_name="npro-agent-debug-symbols-${VERSION}-${REVISION}.${ARCH}-macos"
         cp -R "${WAZUH_PATH}/src/symbols"  "${DESTINATION}"
         zip -r "${DESTINATION}/${symbols_pkg_name}.zip" "${DESTINATION}/symbols"
         rm -rf "${DESTINATION}/symbols"

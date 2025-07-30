@@ -176,8 +176,8 @@ create_package() {
     VERSION=`cat /tmp/VERSION`
     rm ${install_path}/wodles/oscap/content/*.xml
     wazuh_version=`echo "${wazuh_version}" | cut -d v -f 2`
-    pkg_tar_file="wazuh-agent-${wazuh_version}-${wazuh_revision}-hpux-11v3-ia64.tar"
-    tar cvpf ${target_dir}/${pkg_tar_file} ${install_path} /sbin/init.d/wazuh-agent /sbin/rc2.d/S97wazuh-agent /sbin/rc3.d/S97wazuh-agent
+    pkg_tar_file="npro-agent-${wazuh_version}-${wazuh_revision}-hpux-11v3-ia64.tar"
+    tar cvpf ${target_dir}/${pkg_tar_file} ${install_path} /sbin/init.d/npro-agent /sbin/rc2.d/S97wazuh-agent /sbin/rc3.d/S97wazuh-agent
     pkg_name="${pkg_tar_file}.gz"
     gzip ${target_dir}/${pkg_tar_file}
 
@@ -215,7 +215,7 @@ clean() {
 
     rm -rf ${install_path}
 
-    find /sbin -name "*wazuh-agent*" -exec rm {} \;
+    find /sbin -name "*npro-agent*" -exec rm {} \;
     userdel wazuh
     groupdel wazuh
 

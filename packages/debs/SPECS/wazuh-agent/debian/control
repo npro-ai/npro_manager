@@ -1,4 +1,4 @@
-Source: wazuh-agent
+Source: npro-agent
 Section: admin
 Priority: extra
 Maintainer: Wazuh, Inc <info@wazuh.com>
@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 7.0.50~), make, gcc, linux-libc-dev, gawk, libaudit
 Standards-Version: 3.8.4
 Homepage: https://www.wazuh.com
 
-Package: wazuh-agent
+Package: npro-agent
 Architecture: any
 Depends: ${shlibs:Depends}, libc6 (>= 2.7), lsb-release, debconf, adduser
 Conflicts: ossec-hids-agent, wazuh-manager, ossec-hids, wazuh-api
@@ -17,10 +17,10 @@ Description: Wazuh agent
  the following capabilities: log analysis, file integrity monitoring,
  intrusions detection and policy and compliance monitoring.
 
-Package: wazuh-agent-dbg
+Package: npro-agent-dbg
 Section: debug
 Priority: optional
 Architecture: any
-Depends: wazuh-agent
-Description: Debug symbols for wazuh-agent.
-  This package contains debug symbols for debugging wazuh-agent.
+Depends: npro-agent
+Description: Debug symbols for npro-agent.
+  This package contains debug symbols for debugging npro-agent.

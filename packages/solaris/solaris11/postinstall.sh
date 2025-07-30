@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for wazuh-agent
+# postinst script for npro-agent
 # Wazuh, Inc 2015
 
 install_path="<INSTALL_PATH>"

@@ -78,13 +78,13 @@ wazuh# cd packages
 ## Generate and push builder images to GH
 
 ```bash
-curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_WORKFLOW_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" --data-binary "@$(pwd)/wazuh-agent-test-amd64-rpm.json" "https://api.github.com/repos/wazuh/wazuh/actions/workflows/packages-upload-agent-images-amd.yml/dispatches"
+curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_WORKFLOW_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" --data-binary "@$(pwd)/npro-agent-test-amd64-rpm.json" "https://api.github.com/repos/wazuh/wazuh/actions/workflows/packages-upload-agent-images-amd.yml/dispatches"
 ```
 
 Where the JSON looks like this:
 
 ```json
-# cat wazuh-agent-test-amd64-rpm.json
+# cat npro-agent-test-amd64-rpm.json
 {
     "ref":"4.9.0",
     "inputs":
@@ -102,12 +102,12 @@ Where the JSON looks like this:
 ## Generate packages
 
 ```bash
-curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_WORKFLOW_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" --data-binary "@$(pwd)/wazuh-agent-test-amd64-rpm.json" "https://api.github.com/repos/wazuh/wazuh/actions/workflows/packages-build-linux-agent-amd.yml/dispatches"
+curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_WORKFLOW_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" --data-binary "@$(pwd)/npro-agent-test-amd64-rpm.json" "https://api.github.com/repos/wazuh/wazuh/actions/workflows/packages-build-linux-agent-amd.yml/dispatches"
 ```
 
 Where the JSON looks like this:
 ```json
-# cat wazuh-agent-test-amd64-rpm.json
+# cat npro-agent-test-amd64-rpm.json
 {
     "ref":"4.9.0",
     "inputs":

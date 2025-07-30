@@ -84,11 +84,11 @@ case "$1" in
     upgrade|deconfigure)
 
       # Stop the services before uninstalling the package
-      if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
-          systemctl stop wazuh-agent > /dev/null 2>&1
+      if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet npro-agent > /dev/null 2>&1; then
+          systemctl stop npro-agent > /dev/null 2>&1
           touch ${WAZUH_TMP_DIR}/wazuh.restart
-      elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "running" > /dev/null 2>&1; then
-          service wazuh-agent stop > /dev/null 2>&1
+      elif command -v service > /dev/null 2>&1 && service npro-agent status 2>/dev/null | grep "running" > /dev/null 2>&1; then
+          service npro-agent stop > /dev/null 2>&1
           touch ${WAZUH_TMP_DIR}/wazuh.restart
       elif ${DIR}/bin/ossec-control status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
           touch ${WAZUH_TMP_DIR}/wazuh.restart
@@ -106,11 +106,11 @@ case "$1" in
 
       # Stop the services before uninstalling the package
       # Check for systemd
-      if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
-          systemctl stop wazuh-agent > /dev/null 2>&1
+      if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet npro-agent > /dev/null 2>&1; then
+          systemctl stop npro-agent > /dev/null 2>&1
       # Check for SysV
-      elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "running" > /dev/null 2>&1; then
-          service wazuh-agent stop > /dev/null 2>&1
+      elif command -v service > /dev/null 2>&1 && service npro-agent status 2>/dev/null | grep "running" > /dev/null 2>&1; then
+          service npro-agent stop > /dev/null 2>&1
       fi
       ${DIR}/bin/wazuh-control stop > /dev/null 2>&1
 

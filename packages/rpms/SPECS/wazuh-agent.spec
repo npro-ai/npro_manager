@@ -9,7 +9,7 @@
 %endif
 
 Summary:     Wazuh helps you to gain security visibility into your infrastructure by monitoring hosts at an operating system and application level. It provides the following capabilities: log analysis, file integrity monitoring, intrusions detection and policy and compliance monitoring
-Name:        wazuh-agent
+Name:        npro-agent
 Version:     %{_version}
 Release:     %{_release}
 License:     GPL
@@ -43,9 +43,9 @@ log analysis, file integrity monitoring, intrusions detection and policy and com
 %if %{_arch} != ppc64le
 %debug_package
 %endif
-%package wazuh-agent-debuginfo
+%package npro-agent-debuginfo
 Summary: Debug information for package %{name}.
-%description wazuh-agent-debuginfo
+%description npro-agent-debuginfo
 This package provides debug information for package %{name}.
 %endif
 
@@ -109,7 +109,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/.ssh
 cp -pr %{_localstatedir}/* ${RPM_BUILD_ROOT}%{_localstatedir}/
 mkdir -p ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
 sed -i "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/ossec-hids-rh.init
-install -m 0755 src/init/templates/ossec-hids-rh.init ${RPM_BUILD_ROOT}%{_initrddir}/wazuh-agent
+install -m 0755 src/init/templates/ossec-hids-rh.init ${RPM_BUILD_ROOT}%{_initrddir}/npro-agent
 sed -i "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/npro-agent.service
 install -m 0644 src/init/templates/npro-agent.service ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
 
@@ -234,12 +234,12 @@ if [ $1 = 2 ]; then
     exit 1
   fi
 
-  if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
+  if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet npro-agent > /dev/null 2>&1; then
     systemctl stop npro-agent.service > /dev/null 2>&1
     touch %{_localstatedir}/tmp/wazuh.restart
   # Check for SysV
-  elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
-    service wazuh-agent stop > /dev/null 2>&1
+  elif command -v service > /dev/null 2>&1 && service npro-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
+    service npro-agent stop > /dev/null 2>&1
     touch %{_localstatedir}/tmp/wazuh.restart
   elif %{_localstatedir}/bin/wazuh-control status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
     touch %{_localstatedir}/tmp/wazuh.restart
@@ -285,7 +285,7 @@ if [ $1 = 1 ]; then
 fi
 
 if [[ -d /run/systemd/system ]]; then
-  rm -f %{_initrddir}/wazuh-agent
+  rm -f %{_initrddir}/npro-agent
 fi
 
 # Delete the installation files used to configure the agent
@@ -514,11 +514,11 @@ if [ $1 = 0 ]; then
 
   # Stop the services before uninstall the package
   # Check for systemd
-  if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet wazuh-agent > /dev/null 2>&1; then
+  if command -v systemctl > /dev/null 2>&1 && systemctl > /dev/null 2>&1 && systemctl is-active --quiet npro-agent > /dev/null 2>&1; then
     systemctl stop npro-agent.service > /dev/null 2>&1
   # Check for SysV
-  elif command -v service > /dev/null 2>&1 && service wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
-    service wazuh-agent stop > /dev/null 2>&1
+  elif command -v service > /dev/null 2>&1 && service npro-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
+    service npro-agent stop > /dev/null 2>&1
   fi
   %{_localstatedir}/bin/wazuh-control stop > /dev/null 2>&1
 
@@ -537,7 +537,7 @@ if [ $1 = 0 ]; then
     sles=$(grep "SUSE Linux Enterprise Server" /etc/SuSE-release)
   fi
   if [ ! -z "$sles" ]; then
-    rm -f /etc/init.d/wazuh-agent
+    rm -f /etc/init.d/npro-agent
   fi
 
   # Remove SCA files
@@ -611,7 +611,7 @@ if [ -f %{_localstatedir}/tmp/wazuh.restart ]; then
     systemctl daemon-reload > /dev/null 2>&1
     systemctl restart npro-agent.service > /dev/null 2>&1
   elif command -v service > /dev/null 2>&1; then
-    service wazuh-agent restart > /dev/null 2>&1
+    service npro-agent restart > /dev/null 2>&1
   else
     %{_localstatedir}/bin/wazuh-control restart > /dev/null 2>&1
   fi
@@ -635,7 +635,7 @@ rm -fr %{buildroot}
 
 %files
 %defattr(-,root,root)
-%config(missingok) %{_initrddir}/wazuh-agent
+%config(missingok) %{_initrddir}/npro-agent
 %attr(640, root, wazuh) %verify(not md5 size mtime) %ghost %{_sysconfdir}/ossec-init.conf
 /usr/lib/systemd/system/npro-agent.service
 %dir %attr(750, root, wazuh) %{_localstatedir}

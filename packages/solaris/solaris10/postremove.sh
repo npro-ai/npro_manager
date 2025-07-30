@@ -1,5 +1,5 @@
 #!/bin/sh
-# postremove script for wazuh-agent
+# postremove script for npro-agent
 # Wazuh, Inc 2015
 
 if getent passwd wazuh > /dev/null 2>&1; then

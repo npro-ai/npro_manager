@@ -197,7 +197,7 @@ build_package() {
   source_code="http://api.github.com/repos/wazuh/wazuh/tarball/${reference}"
 
   rm -f wazuh.tar.gz && curl -L ${source_code} -k -o wazuh.tar.gz -s
-  rm -rf wazuh-wazuh-* wazuh-agent-*
+  rm -rf wazuh-wazuh-* npro-agent-*
   extracted_directory=$(gunzip -c wazuh.tar.gz | tar -xvf - | tail -n 1 | cut -d' ' -f2 | cut -d'/' -f1)
   wazuh_version=$(awk -F'"' '/"version"[ \t]*:/ {print $4}' $extracted_directory/VERSION.json)
 
@@ -230,7 +230,7 @@ build_package() {
   [ -f VERSION.json.tmp ] && rm VERSION.json.tmp
   popd
 
-  cp -pr ${extracted_directory} wazuh-agent-${wazuh_version}
+  cp -pr ${extracted_directory} npro-agent-${wazuh_version}
 
   rpm_build_dir="/opt/freeware/src/packages"
   mkdir -p ${rpm_build_dir}/BUILD
@@ -240,11 +240,11 @@ build_package() {
   mkdir -p ${rpm_build_dir}/SPECS
   mkdir -p ${rpm_build_dir}/SRPMS
 
-  package_name=wazuh-agent-${wazuh_version}
+  package_name=npro-agent-${wazuh_version}
   tar cf ${package_name}.tar ${package_name} && gzip ${package_name}.tar
   mv ${package_name}.tar.gz ${rpm_build_dir}/SOURCES/
 
-  cp ${current_path}/SPECS/wazuh-agent-aix.spec ${rpm_build_dir}/SPECS/${package_name}-aix.spec
+  cp ${current_path}/SPECS/npro-agent-aix.spec ${rpm_build_dir}/SPECS/${package_name}-aix.spec
 
   socket_lib=$(find /opt/freeware/lib/gcc/*/6.3.0/include-fixed/sys/ -name socket.h)
 

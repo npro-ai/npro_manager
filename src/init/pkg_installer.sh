@@ -43,11 +43,11 @@ else
 fi
 
 if [[ "$OS" == "Darwin" ]]; then
-    installer -pkg ./var/upgrade/wazuh-agent* -target / >> ./logs/upgrade.log 2>&1
+    installer -pkg ./var/upgrade/npro-agent* -target / >> ./logs/upgrade.log 2>&1
 elif [[ "$OS" == "Linux" ]]; then
     if find ./var/upgrade/ -mindepth 1 -maxdepth 1 -type f -name "*.rpm" | read; then
         if command -v rpm >/dev/null 2>&1; then
-            rpm -UFvh ./var/upgrade/wazuh-agent* >> ./logs/upgrade.log 2>&1
+            rpm -UFvh ./var/upgrade/npro-agent* >> ./logs/upgrade.log 2>&1
         else
             echo "$(date +"%Y/%m/%d %H:%M:%S") - Upgrade failed. RPM package found but rpm command not found." >> ./logs/upgrade.log
             echo -ne "2" > ./var/upgrade/upgrade_result
@@ -56,7 +56,7 @@ elif [[ "$OS" == "Linux" ]]; then
         fi
     elif find ./var/upgrade/ -mindepth 1 -maxdepth 1 -type f -name "*.deb" | read; then
         if command -v dpkg >/dev/null 2>&1; then
-            dpkg -i --force-confdef ./var/upgrade/wazuh-agent* >> ./logs/upgrade.log 2>&1
+            dpkg -i --force-confdef ./var/upgrade/npro-agent* >> ./logs/upgrade.log 2>&1
         else
             echo "$(date +"%Y/%m/%d %H:%M:%S") - Upgrade failed. DEB package found but dpkg command not found." >> ./logs/upgrade.log
             echo -ne "2" > ./var/upgrade/upgrade_result
@@ -65,7 +65,7 @@ elif [[ "$OS" == "Linux" ]]; then
         fi
     elif find ./var/upgrade/ -mindepth 1 -maxdepth 1 -type f -name "*.apk" | read; then
         if command -v apk >/dev/null 2>&1; then
-            apk add --allow-untrusted --force ./var/upgrade/wazuh-agent* >> ./logs/upgrade.log 2>&1
+            apk add --allow-untrusted --force ./var/upgrade/npro-agent* >> ./logs/upgrade.log 2>&1
         else
             echo "$(date +"%Y/%m/%d %H:%M:%S") - Upgrade failed. APK package found but apk command not found." >> ./logs/upgrade.log
             echo -ne "2" > ./var/upgrade/upgrade_result

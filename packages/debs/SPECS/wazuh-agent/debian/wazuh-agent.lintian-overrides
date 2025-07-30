@@ -1,10 +1,10 @@
-wazuh-agent: embedded-library
-wazuh-agent: embedded-zlib
-wazuh-agent: possible-gpl-code-linked-with-openssl
-wazuh-agent: new-package-should-close-itp-bug
-wazuh-agent: possibly-insecure-handling-of-tmp-files-in-maintainer-script
-wazuh-agent: non-standard-dir-in-var
-wazuh-agent: file-in-unusual-dir
-wazuh-agent: hardening-no-fortify-functions
-wazuh-agent: hardening-no-relro
-wazuh-agent: binary-from-other-architecture var/ossec/lib/modern.bpf.o
+npro-agent: embedded-library
+npro-agent: embedded-zlib
+npro-agent: possible-gpl-code-linked-with-openssl
+npro-agent: new-package-should-close-itp-bug
+npro-agent: possibly-insecure-handling-of-tmp-files-in-maintainer-script
+npro-agent: non-standard-dir-in-var
+npro-agent: file-in-unusual-dir
+npro-agent: hardening-no-fortify-functions
+npro-agent: hardening-no-relro
+npro-agent: binary-from-other-architecture var/ossec/lib/modern.bpf.o

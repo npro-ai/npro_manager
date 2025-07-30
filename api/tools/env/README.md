@@ -9,4 +9,4 @@ This folder contains the development environment for the Wazuh 4.x versions. It 
 - **wazuh-worker1**: Worker node #1.
 - **wazuh-worker2**: Worker node #2.
 - **nginx-lb**: NGINX load balancer to distribute agent connections among nodes.
-- **wazuh-agent**: Agent.
+- **npro-agent**: Agent.

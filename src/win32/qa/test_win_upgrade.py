@@ -11,7 +11,7 @@ INSTALL_PATH = 'C:\\Program Files (x86)\\ossec-agent\\'
 def populate_dict(dict, files_list):
     for file in files_list:
         # We skip this executable because the 'eventchannel' will be used instead
-        if file.name.count('WAZUH_AGENT.EXE') > 0:
+        if file.name.count('NPRO_AGENT.EXE') > 0:
             continue
 
         with open(file, "rb") as f:

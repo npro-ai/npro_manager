@@ -1,5 +1,5 @@
 # Spec file for AIX systems
-Name:        wazuh-agent
+Name:        npro-agent
 Version:     %{_version}
 Release:     %{_release}
 License:     GPL
@@ -57,7 +57,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/.ssh
 # Copy the files into RPM_BUILD_ROOT directory
 sed "s:WAZUH_HOME_TMP:%{_localstatedir}:g" src/init/templates/ossec-hids-aix.init > src/init/templates/ossec-hids-aix.init.tmp
 mv src/init/templates/ossec-hids-aix.init.tmp src/init/templates/ossec-hids-aix.init
-/opt/freeware/bin/install -m 0750 src/init/templates/ossec-hids-aix.init ${RPM_BUILD_ROOT}%{_init_scripts}/wazuh-agent
+/opt/freeware/bin/install -m 0750 src/init/templates/ossec-hids-aix.init ${RPM_BUILD_ROOT}%{_init_scripts}/npro-agent
 cp -pr %{_localstatedir}/* ${RPM_BUILD_ROOT}%{_localstatedir}/
 
 # Add configuration scripts
@@ -99,8 +99,8 @@ if [ $1 = 1 ]; then
 fi
 
 if [ $1 = 2 ]; then
-  if /etc/rc.d/init.d/wazuh-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
-    /etc/rc.d/init.d/wazuh-agent stop > /dev/null 2>&1 || :
+  if /etc/rc.d/init.d/npro-agent status 2>/dev/null | grep "is running" > /dev/null 2>&1; then
+    /etc/rc.d/init.d/npro-agent stop > /dev/null 2>&1 || :
     touch %{_localstatedir}/tmp/wazuh.restart
   fi
   %{_localstatedir}/bin/ossec-control stop > /dev/null 2>&1 || %{_localstatedir}/bin/wazuh-control stop > /dev/null 2>&1
@@ -164,8 +164,8 @@ if [ $1 = 1 ]; then
 
 fi
 chown root:wazuh %{_localstatedir}/etc/ossec.conf
-ln -fs /etc/rc.d/init.d/wazuh-agent /etc/rc.d/rc2.d/S97wazuh-agent
-ln -fs /etc/rc.d/init.d/wazuh-agent /etc/rc.d/rc3.d/S97wazuh-agent
+ln -fs /etc/rc.d/init.d/npro-agent /etc/rc.d/rc2.d/S97wazuh-agent
+ln -fs /etc/rc.d/init.d/npro-agent /etc/rc.d/rc3.d/S97wazuh-agent
 
 rm -rf %{_localstatedir}/tmp/etc
 rm -rf %{_localstatedir}/tmp/src
@@ -194,14 +194,14 @@ fi
 
 if [ -f %{_localstatedir}/tmp/wazuh.restart ]; then
   rm -f %{_localstatedir}/tmp/wazuh.restart
-  /etc/rc.d/init.d/wazuh-agent restart > /dev/null 2>&1 || :
+  /etc/rc.d/init.d/npro-agent restart > /dev/null 2>&1 || :
 fi
 
 %preun
 
 if [ $1 = 0 ]; then
 
-  /etc/rc.d/init.d/wazuh-agent stop > /dev/null 2>&1 || :
+  /etc/rc.d/init.d/npro-agent stop > /dev/null 2>&1 || :
   find %{_localstatedir}/queue \( -type f -o -type s \) -exec rm -f {} \; || :
 
 fi

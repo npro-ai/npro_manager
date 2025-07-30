@@ -1,5 +1,5 @@
 #!/bin/sh
-# preremove script for wazuh-agent
+# preremove script for npro-agent
 # Wazuh, Inc 2015
 
 control_binary="wazuh-control"

@@ -14,8 +14,8 @@ sudo /bin/rm -r /Library/Ossec*
 /usr/bin/dscl . -delete "/Users/wazuh"
 /usr/bin/dscl . -delete "/Groups/wazuh"
 
-/usr/sbin/pkgutil --forget com.wazuh.pkg.wazuh-agent
-/usr/sbin/pkgutil --forget com.wazuh.pkg.wazuh-agent-etc
+/usr/sbin/pkgutil --forget com.wazuh.pkg.npro-agent
+/usr/sbin/pkgutil --forget com.wazuh.pkg.npro-agent-etc
 
 # In case it was installed via Puppet pkgdmg provider
 

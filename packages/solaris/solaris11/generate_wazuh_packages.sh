@@ -129,7 +129,7 @@ check_version(){
     fi
 }
 
-#Compile and install wazuh-agent
+#Compile and install npro-agent
 compile() {
     export PATH=/usr/local/gcc-5.5.0/bin:/usr/sbin:/usr/bin:/usr/ccs/bin:/opt/csw/bin
     export CPLUS_INCLUDE_PATH=/usr/local/gcc-5.5.0/include/c++/5.5.0
@@ -171,11 +171,11 @@ create_package() {
     ver=$VERSION
     if [ $(echo $VERSION | grep "v") ]; then
         ver=`echo $VERSION | cut -c 2-`
-        sed "s/<VERSION>/$ver/" ${current_path}/wazuh-agent.mog-template > ${current_path}/wazuh-agent.mog-aux
+        sed "s/<VERSION>/$ver/" ${current_path}/npro-agent.mog-template > ${current_path}/npro-agent.mog-aux
     else
-        sed "s/<VERSION>/$VERSION/" ${current_path}/wazuh-agent.mog-template > ${current_path}/wazuh-agent.mog-aux
+        sed "s/<VERSION>/$VERSION/" ${current_path}/npro-agent.mog-template > ${current_path}/npro-agent.mog-aux
     fi
-    sed "s/<TAG>/$VERSION/" ${current_path}/wazuh-agent.mog-aux > ${current_path}/wazuh-agent.mog
+    sed "s/<TAG>/$VERSION/" ${current_path}/npro-agent.mog-aux > ${current_path}/npro-agent.mog
 
     echo "Building the package wazuh-agent_$VERSION-sol11-${arch}.p5p"
 
@@ -183,35 +183,35 @@ create_package() {
 
 
     # Package generation process
-    pkgsend generate ${install_path} | pkgfmt > wazuh-agent.p5m.1
+    pkgsend generate ${install_path} | pkgfmt > npro-agent.p5m.1
     sed "s|<INSTALL_PATH>|${install_path}|" ${current_path}/postinstall.sh > ${current_path}/postinstall.sh.new
     mv ${current_path}/postinstall.sh.new ${current_path}/postinstall.sh
 
-    python solaris_fix.py -t SPECS/template_agent.json -p wazuh-agent.p5m.1 # Fix p5m.1 file
-    mv wazuh-agent.p5m.1.aux.fixed wazuh-agent.p5m.1
+    python solaris_fix.py -t SPECS/template_agent.json -p npro-agent.p5m.1 # Fix p5m.1 file
+    mv npro-agent.p5m.1.aux.fixed npro-agent.p5m.1
     # Add the preserve=install-only tag to the configuration files
     for file in etc/ossec.conf etc/local_internal_options.conf etc/client.keys; do
-        sed "s:file $file.*:& preserve=install-only:"  wazuh-agent.p5m.1 > wazuh-agent.p5m.1.aux_sed
-        mv wazuh-agent.p5m.1.aux_sed wazuh-agent.p5m.1
+        sed "s:file $file.*:& preserve=install-only:"  npro-agent.p5m.1 > npro-agent.p5m.1.aux_sed
+        mv npro-agent.p5m.1.aux_sed npro-agent.p5m.1
     done
     # Add service files
-    echo "file smf_manifest.xml path=lib/svc/manifest/site/post-install.xml owner=root group=sys mode=0744 restart_fmri=svc:/system/manifest-import:default" >> wazuh-agent.p5m.1
-    echo "dir  path=var/ossec/installation_scripts owner=root group=bin mode=0755" >> wazuh-agent.p5m.1
-    echo "file postinstall.sh path=var/ossec/installation_scripts/postinstall.sh owner=root group=bin mode=0744" >> wazuh-agent.p5m.1
-    echo "file wazuh-agent path=etc/init.d/wazuh-agent owner=root group=sys mode=0744" >> wazuh-agent.p5m.1
-    echo "file S97wazuh-agent path=etc/rc2.d/S97wazuh-agent owner=root group=sys mode=0744" >> wazuh-agent.p5m.1
-    echo "file S97wazuh-agent path=etc/rc3.d/S97wazuh-agent owner=root group=sys mode=0744" >> wazuh-agent.p5m.1
+    echo "file smf_manifest.xml path=lib/svc/manifest/site/post-install.xml owner=root group=sys mode=0744 restart_fmri=svc:/system/manifest-import:default" >> npro-agent.p5m.1
+    echo "dir  path=var/ossec/installation_scripts owner=root group=bin mode=0755" >> npro-agent.p5m.1
+    echo "file postinstall.sh path=var/ossec/installation_scripts/postinstall.sh owner=root group=bin mode=0744" >> npro-agent.p5m.1
+    echo "file npro-agent path=etc/init.d/npro-agent owner=root group=sys mode=0744" >> npro-agent.p5m.1
+    echo "file S97wazuh-agent path=etc/rc2.d/S97wazuh-agent owner=root group=sys mode=0744" >> npro-agent.p5m.1
+    echo "file S97wazuh-agent path=etc/rc3.d/S97wazuh-agent owner=root group=sys mode=0744" >> npro-agent.p5m.1
 
     # Add user and group wazuh
-    echo "group groupname=wazuh" >> wazuh-agent.p5m.1
-    echo "user username=wazuh group=wazuh" >> wazuh-agent.p5m.1
+    echo "group groupname=wazuh" >> npro-agent.p5m.1
+    echo "user username=wazuh group=wazuh" >> npro-agent.p5m.1
 
     # Necessary to upgrade from < 4.3 versions
-    echo "group groupname=ossec" >> wazuh-agent.p5m.1
-    echo "user username=ossec group=ossec" >> wazuh-agent.p5m.1
+    echo "group groupname=ossec" >> npro-agent.p5m.1
+    echo "user username=ossec group=ossec" >> npro-agent.p5m.1
 
-    pkgmogrify -DARCH=`uname -p` wazuh-agent.p5m.1 wazuh-agent.mog | pkgfmt > wazuh-agent.p5m.2
-    pkgsend -s http://localhost:9001 publish -d ${install_path} -d /etc/init.d -d /etc/rc2.d -d /etc/rc3.d -d ${current_path} wazuh-agent.p5m.2 > pack
+    pkgmogrify -DARCH=`uname -p` npro-agent.p5m.1 npro-agent.mog | pkgfmt > npro-agent.p5m.2
+    pkgsend -s http://localhost:9001 publish -d ${install_path} -d /etc/init.d -d /etc/rc2.d -d /etc/rc3.d -d ${current_path} npro-agent.p5m.2 > pack
     package=`cat pack | grep wazuh | cut -c 13-` # This extracts the name of the package generated in the previous step
     rm -f *.p5p
     pkg_name="wazuh-agent_$VERSION-sol11-${arch}.p5p"
@@ -274,9 +274,9 @@ clean() {
     zfs destroy rpool/wazuh
     rm -rf /wazuh
     rm -rf $SOURCE/wazuh
-    rm -f wazuh-agent.p5m*
-    rm -f wazuh-agent.mog
-    rm -f wazuh-agent.mog-aux
+    rm -f npro-agent.p5m*
+    rm -f npro-agent.mog
+    rm -f npro-agent.mog-aux
     rm -f pack
 }
 

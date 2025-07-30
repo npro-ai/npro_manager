@@ -1,8 +1,8 @@
 #!/bin/sh
-# postinst script for wazuh-agent
+# postinst script for npro-agent
 # Wazuh, Inc 2015
 
-OSSEC_HIDS_TMP_DIR="/tmp/wazuh-agent"
+OSSEC_HIDS_TMP_DIR="/tmp/npro-agent"
 DIR="/var/ossec"
 
 # Restore the ossec.confs, client.keys and local_internal_options
@@ -31,8 +31,8 @@ if [ -d /etc/logrotate.d/ ]; then
 fi
 
 # Service
-if [ -f /etc/init.d/wazuh-agent ]; then
-        /etc/init.d/wazuh-agent stop > /dev/null 2>&1
+if [ -f /etc/init.d/npro-agent ]; then
+        /etc/init.d/npro-agent stop > /dev/null 2>&1
 fi
 
 ## Delete tmp directory

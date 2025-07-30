@@ -1,5 +1,5 @@
 #!/bin/sh
-# preinstall script for wazuh-agent
+# preinstall script for npro-agent
 # Wazuh, Inc 2015
 
 if [ ! -f /etc/ossec-init.conf ]; then
@@ -20,7 +20,7 @@ fi
 
 USER="wazuh"
 GROUP="wazuh"
-OSSEC_HIDS_TMP_DIR="/tmp/wazuh-agent"
+OSSEC_HIDS_TMP_DIR="/tmp/npro-agent"
 OSMYSHELL="/sbin/nologin"
 
 # environment configuration
@@ -59,8 +59,8 @@ case $type in
         fi
     fi
     # Delete old service
-    if [ -f /etc/init.d/wazuh-agent ]; then
-        rm /etc/init.d/wazuh-agent
+    if [ -f /etc/init.d/npro-agent ]; then
+        rm /etc/init.d/npro-agent
     fi
     # back up the current user rules
     if [ -f ${DIR}/etc/client.keys ]; then

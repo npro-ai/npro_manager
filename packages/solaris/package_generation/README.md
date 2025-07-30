@@ -88,7 +88,7 @@ To build a Solaris package using vagrant, you need to download this repository c
         winrm-config    outputs WinRM configuration to connect to the machine
 
     ```
-    * To build a wazuh-agent package for Solaris 10 from branch v3.9.0 sources:
+    * To build a npro-agent package for Solaris 10 from branch v3.9.0 sources:
         `# vagrant --branch-tag=v3.9.0 up solaris10`.
 
 3. After the virtual machine finishes generating the package you can find it in `src`.

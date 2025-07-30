@@ -261,15 +261,15 @@ package(){
     echo "i postinstall=postinstall.sh" >> "wazuh-agent_$VERSION.proto"
     echo "i preremove=preremove.sh" >> "wazuh-agent_$VERSION.proto"
     echo "i postremove=postremove.sh" >> "wazuh-agent_$VERSION.proto"
-    echo "f none /etc/init.d/wazuh-agent  0755 root root" >> "wazuh-agent_$VERSION.proto"
-    echo "s none /etc/rc2.d/S97wazuh-agent=/etc/init.d/wazuh-agent" >> "wazuh-agent_$VERSION.proto"
-    echo "s none /etc/rc3.d/S97wazuh-agent=/etc/init.d/wazuh-agent" >> "wazuh-agent_$VERSION.proto"
+    echo "f none /etc/init.d/npro-agent  0755 root root" >> "wazuh-agent_$VERSION.proto"
+    echo "s none /etc/rc2.d/S97wazuh-agent=/etc/init.d/npro-agent" >> "wazuh-agent_$VERSION.proto"
+    echo "s none /etc/rc3.d/S97wazuh-agent=/etc/init.d/npro-agent" >> "wazuh-agent_$VERSION.proto"
     cat "wazuh-agent_$VERSION.list" | pkgproto >> "wazuh-agent_$VERSION.proto"
 
     echo $VERSION
     pkgmk -o -r / -d . -f "wazuh-agent_$VERSION.proto"
     pkg_name="wazuh-agent_$VERSION-sol10-$ARCH.pkg"
-    pkgtrans -s ${CURRENT_PATH} "${pkg_name}" wazuh-agent
+    pkgtrans -s ${CURRENT_PATH} "${pkg_name}" npro-agent
 
     mkdir -p ${target_dir}
 
@@ -284,7 +284,7 @@ clean(){
     set_control_binary
     cd ${CURRENT_PATH}
     rm -rf ${SOURCE}
-    rm -rf wazuh-agent wazuh *.list *proto
+    rm -rf npro-agent wazuh *.list *proto
     rm -f *.new
 
     ## Stop and remove application
@@ -295,7 +295,7 @@ clean(){
     rm -r ${install_path}*
 
     # remove launchdaemons
-    rm -f /etc/init.d/wazuh-agent
+    rm -f /etc/init.d/npro-agent
     rm -f /etc/rc2.d/S97wazuh-agent
     rm -f /etc/rc3.d/S97wazuh-agent
 

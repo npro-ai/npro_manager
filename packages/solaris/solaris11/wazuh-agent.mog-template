@@ -1,4 +1,4 @@
-set name=pkg.fmri value=wazuh-agent@<VERSION>,5.11-0
+set name=pkg.fmri value=npro-agent@<VERSION>,5.11-0
 set name=pkg.summary value="Wazuh agent"
 set name=pkg.description value="Wazuh agent monitoring utility"
 set name=info.maintainer value="Wazuh Inc. <support@wazuh.com>"

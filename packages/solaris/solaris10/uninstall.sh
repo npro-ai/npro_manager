@@ -1,5 +1,5 @@
 #!/bin/sh
-# uninstall script for wazuh-agent
+# uninstall script for npro-agent
 # Wazuh, Inc 2015
 
 control_binary="wazuh-control"
@@ -16,7 +16,7 @@ rm -rf /var/ossec/
 #/bin/launchctl unload /Library/LaunchDaemons/com.wazuh.agent.plist
 
 # remove launchdaemons
-rm -f /etc/init.d/wazuh-agent
+rm -f /etc/init.d/npro-agent
 rm -rf /etc/rc2.d/S97wazuh-agent
 rm -rf /etc/rc3.d/S97wazuh-agent
 

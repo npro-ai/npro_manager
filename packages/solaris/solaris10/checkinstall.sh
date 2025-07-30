@@ -1,5 +1,5 @@
 #!/bin/sh
-# checkinstall script for wazuh-agent
+# checkinstall script for npro-agent
 # Wazuh, Inc 2015
 
 expected_platform="ARCH"

@@ -254,14 +254,14 @@
                     <Component Id="MANAGE_AGENTS.EXE" DiskId="1" Guid="C15C5883-00FB-41D7-B7E6-53C8BC30761F">
                         <File Id="MANAGE_AGENTS.EXE" Name="manage_agents.exe" Source="manage_agents.exe" />
                     </Component>
-                    <Component Id="WAZUH_AGENT_EVENTCHANNEL.EXE" DiskId="1" Guid="044E7997-12B6-4178-BD00-B90500DBA53F">
-                        <File Id="WAZUH_AGENT_EVENTCHANNEL.EXE" Name="npro-agent.exe" Source="npro-agent-eventchannel.exe" />
+                    <Component Id="NPRO_AGENT_EVENTCHANNEL.EXE" DiskId="1" Guid="044E7997-12B6-4178-BD00-B90500DBA53F">
+                        <File Id="NPRO_AGENT_EVENTCHANNEL.EXE" Name="npro-agent.exe" Source="npro-agent-eventchannel.exe" />
                         <ServiceInstall Name="NproSvc" Type="ownProcess" Start="auto" ErrorControl="normal" Description="Wazuh Windows Agent" DisplayName="Wazuh" Id="svc_install_eventchannel" />
                         <ServiceControl Id="svc_uninstall_eventchannel" Name="NproSvc" Remove="uninstall" Stop="both" Wait="yes" />
                         <Condition>VersionNT &gt;= 600</Condition>
                     </Component>
-                    <Component Id="WAZUH_AGENT.EXE" DiskId="1" Guid="5CCEA6DC-8434-4137-9486-55AE3949266B">
-                        <File Id="WAZUH_AGENT.EXE" Name="npro-agent.exe" Source="npro-agent.exe" />
+                    <Component Id="NPRO_AGENT.EXE" DiskId="1" Guid="5CCEA6DC-8434-4137-9486-55AE3949266B">
+                        <File Id="NPRO_AGENT.EXE" Name="npro-agent.exe" Source="npro-agent.exe" />
                         <ServiceInstall Name="NproSvc" Type="ownProcess" Start="auto" ErrorControl="normal" Description="Wazuh Windows Agent" DisplayName="Wazuh" Id="svc_install" />
                         <ServiceControl Id="ServiceControl" Name="NproSvc" Stop="both" Remove="uninstall" Wait="yes" />
                         <Condition>VersionNT &lt; 600</Condition>
@@ -640,8 +640,8 @@
             <ComponentRef Id="LIBGCC_S_DW2_1.DLL" />
             <ComponentRef Id="LIBSTDCPP_6.DLL" />
             <ComponentRef Id="MANAGE_AGENTS.EXE" />
-            <ComponentRef Id="WAZUH_AGENT_EVENTCHANNEL.EXE" />
-            <ComponentRef Id="WAZUH_AGENT.EXE" />
+            <ComponentRef Id="NPRO_AGENT_EVENTCHANNEL.EXE" />
+            <ComponentRef Id="NPRO_AGENT.EXE" />
             <ComponentRef Id="VISTA_SEC.TXT" />
             <ComponentRef Id="RESTART_WAZUH.EXE" />
             <ComponentRef Id="ROUTE_NULL.EXE" />

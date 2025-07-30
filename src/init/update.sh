@@ -280,7 +280,7 @@ getPreinstalledDir()
     fi
 
     # Getting preinstalled dir for Wazuh agent installations
-    pidir_service_name="wazuh-agent"
+    pidir_service_name="npro-agent"
     if getPreinstalledDirByType && isWazuhInstalled $PREINSTALLEDDIR; then
         return 0;
     fi
